@@ -1,1 +1,1 @@
-# Caloriosa REST DTO client
+# Caloriosa lightweight REST client
