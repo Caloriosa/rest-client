@@ -1,0 +1,1 @@
+# Caloriosa REST DTO client

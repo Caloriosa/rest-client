@@ -1,0 +1,59 @@
+{
+  "name": "@caloriosa/rest-dto",
+  "version": "0.1.0",
+  "description": "Caloriosa REST DTO for node.js",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "npm run lint && ava --verbose",
+    "lint": "eslint src/ tests/",
+    "lint:fix": "eslint src/ tests/ --fix",
+    "generate-docs": "jsdoc -c ./jsdoc.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Caloriosa/rest-dto-node.git"
+  },
+  "keywords": [
+    "dto",
+    "rest",
+    "api",
+    "http",
+    "caloriosa",
+    "component"
+  ],
+  "author": "Caloriosa",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Caloriosa/rest-dto-node/issues"
+  },
+  "homepage": "https://github.com/Caloriosa/rest-dto-node#readme",
+  "dependencies": {
+    "axios": "^0.17.1",
+    "url-join": "^2.0.2"
+  },
+  "devDependencies": {
+    "ava": "^0.24.0",
+    "docdash": "^0.4.0",
+    "eslint": "^4.14.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-config-standard": "^11.0.0-beta.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-node": "^5.2.1",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "jsdoc": "^3.5.5",
+    "node-mocks-http": "^1.6.6",
+    "tui-jsdoc-template": "^1.2.2"
+  },
+  "ava": {
+    "files": [
+      "tests/unit/**/*.test.js",
+      "!**/not-this-file.js"
+    ],
+    "concurrency": 5,
+    "failFast": true,
+    "failWithoutAssertions": true,
+    "tap": false,
+    "powerAssert": false
+  }
+}

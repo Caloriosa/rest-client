@@ -1,0 +1,21 @@
+{
+  "source": {
+      "include": [ "./src", "README.md" ],
+      "includePattern": ".js$",
+      "excludePattern": "(node_modules/|docs)"
+  },
+  "opts": {
+      "template": "node_modules/tui-jsdoc-template",
+      "encoding": "utf8",
+      "destination": "docs/",
+      "recurse": true,
+      "verbose": true
+  },
+  "templates": {
+    "name": "Caloriosa DTO",
+    "tabNames": {
+        "api": "API",
+        "tutorials": "Examples"
+    }
+  }
+}

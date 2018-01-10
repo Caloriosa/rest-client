@@ -1,0 +1,6 @@
+{
+  "client": {
+    "url": "http://10.0.0.143:8080",
+    "appSignature": "WebUI/asdf123" 
+  }
+}
