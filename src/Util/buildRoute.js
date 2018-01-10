@@ -13,9 +13,9 @@ if (typeof util !== "undefined") { // eslint-disable-line
 }
 
 /**
- * @param {Rest} rest 
- * @param {String} method 
- * @param {String} endpoint 
+ * @param {Rest} rest
+ * @param {String} method
+ * @param {String} endpoint
  * @returns {Function}
  * @memberof Router
  * @private
@@ -35,7 +35,7 @@ function makeRequestFor (rest, method, endpoint) {
 }
 
 /**
- * @param {Rest} rest 
+ * @param {Rest} rest
  * @return {Route}
  * @memberof Router
  */

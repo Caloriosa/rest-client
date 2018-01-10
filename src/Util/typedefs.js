@@ -132,7 +132,7 @@ exports.DefaultClientOptions = {
 /**
  * @typedef {Proxy} Route
  * @memberof Typedefs
- */ 
+ */
 
 /**
  * @typedef {String} ApiStatus

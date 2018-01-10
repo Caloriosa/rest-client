@@ -163,7 +163,7 @@ class Rest {
     if (err) {
       return this.resolveError(err)
     }
-    if (['options', 'head'].includes(method)) {
+    if (["options", "head"].includes(method)) {
       data = response.headers
     } else {
       data = response.data
