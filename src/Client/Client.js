@@ -4,7 +4,6 @@ const buildRoute = require("../Util/buildRoute")
 
 /**
  * @class
- * @extends {EventEmiter}
  */
 class Client {
   /**

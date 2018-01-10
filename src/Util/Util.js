@@ -6,10 +6,6 @@ class Util {
   constructor () {
     throw new Error(`Can't instantiate abstract class ${this.constructor.name}`)
   }
-  /**
-    * @callback Util~mapDto
-    * @param {Object} data
-    */
 
   /**
      * Exports only public r/w properties and variables from entity

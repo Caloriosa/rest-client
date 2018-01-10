@@ -1,7 +1,7 @@
 {
-  "name": "@caloriosa/rest-dto",
+  "name": "@caloriosa/rest-client",
   "version": "0.1.0",
-  "description": "Caloriosa REST DTO for node.js",
+  "description": "Caloriosa lightweight REST client for node.js/JavaScript",
   "main": "src/index.js",
   "scripts": {
     "test": "npm run lint && ava --verbose",
@@ -14,7 +14,7 @@
     "url": "git+https://github.com/Caloriosa/rest-dto-node.git"
   },
   "keywords": [
-    "dto",
+    "client",
     "rest",
     "api",
     "http",
