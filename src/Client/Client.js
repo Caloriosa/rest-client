@@ -14,18 +14,32 @@ class Client {
     this._rest = rest
   }
 
+  /**
+   * @type {Rest}
+   * @readonly
+   */
   get rest () {
     return this._rest
   }
 
+  /**
+   * @type {String}
+   */
   get token () {
     return this.rest.token
   }
 
+  /**
+   * @type {String}
+   */
   set token (val) {
     this.rest.token = val
   }
 
+  /**
+   * @type {Route}
+   * @readonly
+   */
   get api () {
     return buildRoute(this.rest)
   }

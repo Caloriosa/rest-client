@@ -1,3 +1,5 @@
+/** @namespace Router */
+
 const { resolveUid } = require("./DataResolver")
 const noop = () => {} // eslint-disable-line no-empty-function
 const methods = ["get", "post", "delete", "patch", "put"]
@@ -10,6 +12,14 @@ if (typeof util !== "undefined") { // eslint-disable-line
   reflectors.push(util.inspect.custom) // eslint-disable-line no-undef
 }
 
+/**
+ * @param {Rest} rest 
+ * @param {String} method 
+ * @param {String} endpoint 
+ * @returns {Function}
+ * @memberof Router
+ * @private
+ */
 function makeRequestFor (rest, method, endpoint) {
   switch (method) {
     case "get":
@@ -25,6 +35,11 @@ function makeRequestFor (rest, method, endpoint) {
   }
 }
 
+/**
+ * @param {Rest} rest 
+ * @return {Route}
+ * @memberof Router
+ */
 function buildRoute (rest) {
   const route = [""]
   const handler = {
