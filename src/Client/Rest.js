@@ -163,8 +163,12 @@ class Rest {
     if (err) {
       return this.resolveError(err)
     }
-    data = response.data
-    this.validateResult(data)
+    if (['options', 'head'].includes(method)) {
+      data = response.headers
+    } else {
+      data = response.data
+      this.validateResult(data)
+    }
     this.emiter.emit("response", data, response)
     return { data, response }
   }

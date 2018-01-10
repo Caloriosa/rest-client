@@ -2,7 +2,7 @@
 
 const { resolveUid } = require("./DataResolver")
 const noop = () => {} // eslint-disable-line no-empty-function
-const methods = ["get", "post", "delete", "patch", "put"]
+const methods = ["get", "post", "delete", "patch", "put", "options", "head"]
 const reflectors = [
   "toString", "valueOf", "inspect", "constructor", "call",
   Symbol.toPrimitive, Symbol.for("util.inspect.custom"), Symbol("util.inspect.custom")
@@ -21,17 +21,16 @@ if (typeof util !== "undefined") { // eslint-disable-line
  * @private
  */
 function makeRequestFor (rest, method, endpoint) {
-  switch (method) {
-    case "get":
-      return (query = null, args = {}) => rest.get(endpoint, query, args)
-    case "post":
-      return (data, query = null, args = {}) => rest.post(endpoint, data, query, args)
-    case "patch":
-      return (data, query = null, args = {}) => rest.patch(endpoint, data, query, args)
-    case "delete":
-      return (query = null, args = {}) => rest.delete(endpoint, query, args)
-    default:
-      return (args = {}) => rest.request(method, endpoint, args)
+  return (data = null, query = null, args = {}) => {
+    if (!["post", "patch", "put"].includes(method)) {
+      // Shift args left by one
+      args = query || {}
+      query = data
+      data = null
+    }
+    args.params = query
+    args.data = data
+    return rest.request(method, endpoint, args)
   }
 }
 
