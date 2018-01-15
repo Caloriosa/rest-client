@@ -1,4 +1,4 @@
-const { Client, UserManager, typedefs } = require("../../../dist/caloriosa-restc.node")
+const { Client, UserManager, typedefs } = require("../../src/index.js")
 const httpMock = require("node-mocks-http")
 
 exports.mockClient = function () {

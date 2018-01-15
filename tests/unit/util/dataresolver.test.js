@@ -1,4 +1,4 @@
-const { DataResolver, User } = require("../../../dist/caloriosa-restc.node")
+const { DataResolver, User } = require("../../../src/index.js")
 const test = require("ava").test
 
 test("resolve UID", t => {

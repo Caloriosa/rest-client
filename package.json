@@ -5,11 +5,12 @@
   "main": "dist/caloriosa-restc.node.js",
   "module": "src/index.js",
   "scripts": {
-    "build": "webpack",
-    "test": "npm run lint && npm run build && ava --verbose",
+    "build": "parallel-webpack",
+    "test": "npm run lint && ava --verbose",
     "lint": "eslint src/ tests/",
     "lint:fix": "eslint src/ tests/ --fix",
-    "generate-docs": "jsdoc -c ./jsdoc.json"
+    "generate-docs": "jsdoc -c ./jsdoc.json",
+    "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -50,7 +51,9 @@
     "eslint-plugin-standard": "^3.0.1",
     "jsdoc": "^3.5.5",
     "node-mocks-http": "^1.6.6",
+    "parallel-webpack": "^2.2.0",
     "tui-jsdoc-template": "^1.2.2",
+    "uglifyjs-webpack-plugin": "^1.1.6",
     "webpack": "^3.10.0"
   },
   "ava": {
