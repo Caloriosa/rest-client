@@ -46,7 +46,7 @@ npm run test # or yarn test
 
 ## Examples
 
-### User
+### As user
 
 ```javascript
 const CaloriosaRestClient = require('@caloriosa/rest-client')
@@ -70,14 +70,14 @@ client.api.users('@ashley').get().then(u => console.log(u.content))
 client.logout().then(() => console.log('User has been logged out'))
 ```
 
-### Device
+### As device
 
 ```javascript
 const CaloriosaRestClient = require('@caloriosa/rest-client')
 
 var client = CaloriosaRestClient.createApiClient({ url: 'https://api.caloriosa.com' })
 
-client.token = "<PutYoutDeviceTokenHere>"
+client.token = "<PutYourDeviceTokenHere>"
 
 // Send measured values example
 client.api.measure.post({
