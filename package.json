@@ -2,7 +2,7 @@
   "name": "@caloriosa/rest-client",
   "version": "0.1.0",
   "description": "Caloriosa lightweight REST client for node.js/JavaScript",
-  "main": "dist/caloriosa-restc.node.js",
+  "main": "dist/caloriosa-restc.js",
   "module": "src/index.js",
   "scripts": {
     "build": "parallel-webpack",
@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Caloriosa/rest-dto-node.git"
+    "url": "git+https://github.com/Caloriosa/rest-client.git"
   },
   "keywords": [
     "client",
@@ -27,9 +27,9 @@
   "author": "Caloriosa",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Caloriosa/rest-dto-node/issues"
+    "url": "https://github.com/Caloriosa/rest-client/issues"
   },
-  "homepage": "https://github.com/Caloriosa/rest-dto-node#readme",
+  "homepage": "https://github.com/Caloriosa/rest-client#readme",
   "dependencies": {
     "axios": "^0.17.1"
   },

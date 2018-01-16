@@ -24,7 +24,7 @@ function createConfig(options) {
     entry: './src/index.js',
     output: {
       path: path.resolve(__dirname, 'dist'),
-      filename: `caloriosa-restc.${options.target}${options.minify ? '.min' : ''}.js`,
+      filename: `caloriosa-restc${options.target === 'node' ? '' : '.' + options.target}${options.minify ? '.min' : ''}.js`,
       library: 'CaloriosaRestClient',
       libraryTarget: target[options.target]
     },
