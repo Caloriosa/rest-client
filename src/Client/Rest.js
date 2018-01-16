@@ -155,7 +155,7 @@ class Rest {
    */
   async request (method, endpoint, args = {}) {
     let request = Util.mergeDefault(this.defaultArgs, args)
-    let resultType = request.resultType || this.resultType
+    let resultType = request.resultType || this.resultType || ResultTypes.FULL_RESPONSE
     let err, response
     request.method = method
     request.url = typeof endpoint === "string" ? endpoint : endpoint.toString()
@@ -167,13 +167,15 @@ class Rest {
     }
     this.emiter.emit("response", response)
     if (["options", "head"].includes(method)) {
-      return resultType === ResultTypes.RESPONSE ? response : response.headers
+      return resultType === ResultTypes.FULL_RESPONSE ? response : response.headers
     }
     this.validateResult(response.data)
     switch (resultType) {
       case ResultTypes.CONTENT_ONLY:
         return response.data.content
-      case ResultTypes.DATA:
+      case ResultTypes.STATUS_ONLY:
+        return response.data.status
+      case ResultTypes.RESPONSE_DATA:
         return response.data
       default:
         return response

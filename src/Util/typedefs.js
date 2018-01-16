@@ -66,16 +66,18 @@ exports.SensorTypes = {
 /**
  * @typedef {String} ResultType
  * @property {String} [CONTENT_ONLY=contentOnly]
- * @property {String} [DATA=data]
- * @property {String} [RESPONSE=response]
+ * @property {String} [STATUS_ONLY=statusOnly]
+ * @property {String} [RESPONSE_DATA=data]
+ * @property {String} [FULL_RESPONSE=response]
  */
 /**
  * @type ResultType
  */
 var ResultTypes = exports.ResultTypes = {
   CONTENT_ONLY: "contentOnly",
-  DATA: "data",
-  RESPONSE: "response"
+  STATUS_ONLY: "statusOnly",
+  RESPONSE_DATA: "data",
+  FULL_RESPONSE: "response"
 }
 
 /**
@@ -110,7 +112,7 @@ exports.DefaultClientOptions = {
   url: "http://localhost:6060",
   token: null,
   appSignature: null,
-  resultType: ResultTypes.DATA,
+  resultType: ResultTypes.RESPONSE_DATA,
   proxy: null
 }
 
