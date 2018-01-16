@@ -82,6 +82,20 @@ class Util {
     return promise.then(data => [null, data])
       .catch(err => [err])
   }
+
+  /**
+   * @param {String} param
+   */
+  static encodeURIComponent (param) {
+    // Encode URI component with whitelisted chars @$:% and encode space as +
+    let patterns = [[/%40/gi, "@"], [/%24/gi, "$"], [/%3A/gi, ":"], [/%25/gi, "%"], [/%20/gi, "+"]]
+    let enc = encodeURIComponent(param)
+    for (let i = 0; i < patterns.length; i++) {
+      let pat = patterns[i]
+      enc = enc.replace(pat[0], pat[1] || null)
+    }
+    return enc
+  }
 }
 
 module.exports = Util
