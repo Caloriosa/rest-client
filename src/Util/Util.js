@@ -88,7 +88,7 @@ class Util {
    */
   static encodeURIComponent (param) {
     // Encode URI component with whitelisted chars @$:% and encode space as +
-    let patterns = [[/%40/gi, "@"], [/%24/gi, "$"], [/%3A/gi, ":"], [/%25/gi, "%"], [/%20/gi, "+"]]
+    let patterns = [[/%40/gi, "@"], [/%24/gi, "$"], [/%3A/gi, ":"], [/%20/gi, "+"]]
     let enc = encodeURIComponent(param)
     for (let i = 0; i < patterns.length; i++) {
       let pat = patterns[i]
