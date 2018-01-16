@@ -5,7 +5,9 @@
   <body>
     <script src="../../dist/caloriosa-restc.js"></script>
     <script>
-      console.log(CaloriosaRestClient.createApiClient())
+      var client = CaloriosaRestClient.createApiClient();
+      console.log(client)
+      client.api.users('@ashley').get().then(console.log).catch(console.log)
     </script>
   </body>
 </html>
