@@ -1,4 +1,4 @@
-const { DefaultClientOptions } = require("../Util/typedefs")
+const { DefaultClientOptions, ResultTypes } = require("../Util/typedefs")
 const EventEmmiter = require("events")
 const axios = require("axios")
 const CaloriosaApiError = require("./CaloriosaApiError")
@@ -34,9 +34,13 @@ class Rest {
      */
     this._options = Util.mergeDefault(DefaultClientOptions, options)
     /**
-     * @type {string}
+     * @type {String}
      */
     this.url = this._options.url
+    /**
+     * @type {ResultType}
+     */
+    this.resultType = this._options.resultType || null
     /**
      * @type {RestClient}
      * @private
@@ -90,7 +94,7 @@ class Rest {
    * @param {string} path REST path (ex: /auth, /users/32, /devices/6/sensors, ...)
    * @param {Object} [query] Query parameters (ex: ?count=20&sort=ASC)
    * @param {Object} [args] HTTP request arguments
-   * @returns {Promise<Response>}
+   * @returns {Promise<*>}
    */
   get (endpoint, query = null, args = {}) {
     args.params = query
@@ -103,7 +107,7 @@ class Rest {
    * @param {string} postData
    * @param {QueryObject} [query]
    * @param {Object} [args]
-   * @returns {Promise<Response>}
+   * @returns {Promise<*>}
    */
   post (endpoint, postData, query = null, args = {}) {
     args.data = Util.trimData(postData)
@@ -117,7 +121,7 @@ class Rest {
    * @param {string} postData
    * @param {QueryObject} [query]
    * @param {Object} [args]
-   * @returns {Promise<Response>}
+   * @returns {Promise<*>}
    */
   patch (endpoint, postData, query = null, args = {}) {
     args = Util.mergeDefault(this.defaultArgs, args)
@@ -131,7 +135,7 @@ class Rest {
    * @param {string} path
    * @param {QueryObject} query
    * @param {Object} args
-   * @returns {Promise<Response>}
+   * @returns {Promise<*>}
    */
   delete (endpoint, query = null, args = {}) {
     args = Util.mergeDefault(this.defaultArgs, args)
@@ -147,14 +151,12 @@ class Rest {
    * @fires Rest#request
    * @fires Rest#response
    * @fires Rest#error
-   * @return {Promise<Object>}
+   * @return {Promise<*>}
    */
-  async request (method, endpoint, args) {
+  async request (method, endpoint, args = {}) {
     let request = Util.mergeDefault(this.defaultArgs, args)
-    let err,
-      response,
-      data
-
+    let resultType = request.resultType || this.resultType
+    let err, response
     request.method = method
     request.url = typeof endpoint === "string" ? endpoint : endpoint.toString()
     this.injectToken(this.token, request)
@@ -163,18 +165,22 @@ class Rest {
     if (err) {
       return this.resolveError(err)
     }
+    this.emiter.emit("response", response)
     if (["options", "head"].includes(method)) {
-      data = response.headers
-    } else {
-      data = response.data
-      this.validateResult(data)
+      return resultType === ResultTypes.RESPONSE ? response : response.headers
     }
-    this.emiter.emit("response", data, response)
-    return { data, response }
+    this.validateResult(response.data)
+    switch (resultType) {
+      case ResultTypes.CONTENT_ONLY:
+        return response.data.content
+      case ResultTypes.DATA:
+        return response.data
+      default:
+        return response
+    }
   }
 
   /**
-   *
    * @private
    * @fires Client#error
    */

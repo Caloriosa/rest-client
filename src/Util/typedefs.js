@@ -64,6 +64,21 @@ exports.SensorTypes = {
 }
 
 /**
+ * @typedef {String} ResultType
+ * @property {String} [CONTENT_ONLY=contentOnly]
+ * @property {String} [DATA=data]
+ * @property {String} [RESPONSE=response]
+ */
+/**
+ * @type ResultType
+ */
+var ResultTypes = exports.ResultTypes = {
+  CONTENT_ONLY: "contentOnly",
+  DATA: "data",
+  RESPONSE: "response"
+}
+
+/**
  * @typedef {Object} HttpProxy
  * @memberof Typedefs
  *
@@ -86,14 +101,16 @@ exports.DefaultHttpProxy = {
  * @memberof Typedefs
  *
  * @property {String} [url=http://localhost:6060]
- * @property {String} [appSignature=null]
  * @property {String} [token=null]
+ * @property {String} [appSignature=null]
+ * @property {ResultType} [resultType=ResultTypes.DATA]
  * @property {HttpProxy} [proxy=null]
  */
 exports.DefaultClientOptions = {
   url: "http://localhost:6060",
   token: null,
   appSignature: null,
+  resultType: ResultTypes.DATA,
   proxy: null
 }
 

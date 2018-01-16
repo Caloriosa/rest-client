@@ -9,6 +9,6 @@ var rest = new Rest({
   url: "https://jsonplaceholder.typicode.com"
 })
 
-rest.request(method, endpoint).then(r => console.dir(r.data))
+rest.request(method, endpoint).then(r => console.dir(r))
 
 process.on("unhandledRejection", e => { console.error(e.stack) })
