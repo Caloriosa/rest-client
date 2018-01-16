@@ -1,9 +1,11 @@
 const createVariants = require('parallel-webpack').createVariants;
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const path = require('path')
+const pkg = require("./package.json")
 
 var variants = {
-  minify: [false, true],
+  minify: [true, false],
+  versioned: [true, false]
 }
 
 function createConfig(options) {
@@ -18,7 +20,7 @@ function createConfig(options) {
     entry: './src/index.js',
     output: {
       path: path.resolve(__dirname, 'dist'),
-      filename: `caloriosa-restc${options.minify ? '.min' : ''}.js`,
+      filename: `caloriosa-restc${options.versioned ? '-' + pkg.version : ''}${options.minify ? '.min' : ''}.js`,
       library: 'CaloriosaRestClient',
       libraryTarget: 'umd'
     },
