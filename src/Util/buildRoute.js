@@ -23,7 +23,7 @@ if (typeof util !== "undefined") { // eslint-disable-line
 function makeRequestFor (rest, method, endpoint) {
   return (data = null, query = null, args = {}) => {
     if (!["post", "patch", "put"].includes(method)) {
-      // Shift args left by one
+      // Shift args right by one
       args = query || {}
       query = data
       data = null
