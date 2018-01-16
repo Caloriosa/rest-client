@@ -144,9 +144,9 @@ class Rest {
    * @param {String} method
    * @param {String} endpoint
    * @param {Object} args
-   * @fires Client#request
-   * @fires Client#response
-   * @fires Client#error
+   * @fires Rest#request
+   * @fires Rest#response
+   * @fires Rest#error
    * @return {Promise<Object>}
    */
   async request (method, endpoint, args) {
