@@ -4,15 +4,10 @@ const path = require('path')
 
 var variants = {
   minify: [false, true],
-  target: ['web', 'node']
 }
 
 function createConfig(options) {
   var plugins = []
-  var target = {
-    node: 'umd',
-    web: 'window'
-  }
 
   if (options.minify) {
     minify = true
@@ -20,13 +15,12 @@ function createConfig(options) {
   }
 
   return {
-    target: options.target,
     entry: './src/index.js',
     output: {
       path: path.resolve(__dirname, 'dist'),
-      filename: `caloriosa-restc${options.target === 'node' ? '' : '.' + options.target}${options.minify ? '.min' : ''}.js`,
+      filename: `caloriosa-restc${options.minify ? '.min' : ''}.js`,
       library: 'CaloriosaRestClient',
-      libraryTarget: target[options.target]
+      libraryTarget: 'umd'
     },
     module: {
       rules: [
