@@ -73,11 +73,11 @@ exports.SensorTypes = {
 /**
  * @type ResultType
  */
-var ResultTypes = exports.ResultTypes = {
+var TransformTypes = exports.TransformTypes = {
   CONTENT_ONLY: "contentOnly",
   STATUS_ONLY: "statusOnly",
-  RESPONSE_DATA: "data",
-  FULL_RESPONSE: "response"
+  RESPONSE_DATA: "responseData",
+  FULL_RESPONSE: "fullResponse"
 }
 
 /**
@@ -112,7 +112,7 @@ exports.DefaultClientOptions = {
   url: "http://localhost:6060",
   token: null,
   appSignature: null,
-  resultType: ResultTypes.RESPONSE_DATA,
+  transform: TransformTypes.RESPONSE_DATA,
   proxy: null
 }
 

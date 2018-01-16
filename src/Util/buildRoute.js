@@ -21,15 +21,16 @@ if (typeof util !== "undefined") { // eslint-disable-line
  * @private
  */
 function makeRequestFor (rest, method, endpoint) {
-  return (data = null, query = null, args = {}) => {
-    if (!["post", "patch", "put"].includes(method)) {
-      // Shift args right by one
-      args = query || {}
-      query = data
-      data = null
+  return (...params) => {
+    let data, query, transform, args
+    if (["post", "patch", "put"].includes(method)) {
+      [ data, query, transform, args = {} ] = params
+    } else {
+      [ query, transform, args = {} ] = params
     }
-    args.params = query
-    args.data = data
+    args.params = query || null
+    args.data = data || null
+    args.transform = transform || null
     return rest.request(method, endpoint, args)
   }
 }

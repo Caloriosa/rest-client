@@ -1,4 +1,4 @@
-const { DefaultClientOptions, ResultTypes } = require("../Util/typedefs")
+const { DefaultClientOptions, TransformTypes } = require("../Util/typedefs")
 const EventEmmiter = require("events")
 const axios = require("axios")
 const CaloriosaApiError = require("./CaloriosaApiError")
@@ -38,9 +38,9 @@ class Rest {
      */
     this.url = this._options.url
     /**
-     * @type {ResultType}
+     * @type {TransformType}
      */
-    this.resultType = this._options.resultType || null
+    this.transform = this._options.transform || null
     /**
      * @type {RestClient}
      * @private
@@ -96,8 +96,9 @@ class Rest {
    * @param {Object} [args] HTTP request arguments
    * @returns {Promise<*>}
    */
-  get (endpoint, query = null, args = {}) {
+  get (endpoint, query = null, transform = null, args = {}) {
     args.params = query
+    args.transform = transform
     return this.request("get", endpoint, args)
   }
 
@@ -109,9 +110,10 @@ class Rest {
    * @param {Object} [args]
    * @returns {Promise<*>}
    */
-  post (endpoint, postData, query = null, args = {}) {
-    args.data = Util.trimData(postData)
+  post (endpoint, postData, query = null, transform = null, args = {}) {
+    args.data = postData
     args.params = query
+    args.transform = transform
     return this.request("post", endpoint, args)
   }
 
@@ -123,10 +125,11 @@ class Rest {
    * @param {Object} [args]
    * @returns {Promise<*>}
    */
-  patch (endpoint, postData, query = null, args = {}) {
+  patch (endpoint, postData, query = null, transform = null, args = {}) {
     args = Util.mergeDefault(this.defaultArgs, args)
-    args.data = Util.trimData(postData)
+    args.data = postData
     args.params = query
+    args.transform = transform
     return this.request("patch", endpoint, args)
   }
 
@@ -137,9 +140,10 @@ class Rest {
    * @param {Object} args
    * @returns {Promise<*>}
    */
-  delete (endpoint, query = null, args = {}) {
+  delete (endpoint, query = null, transform = null, args = {}) {
     args = Util.mergeDefault(this.defaultArgs, args)
     args.parameters = query
+    args.transform = transform
     return this.request("delete", endpoint, args)
   }
 
@@ -155,10 +159,11 @@ class Rest {
    */
   async request (method, endpoint, args = {}) {
     let request = Util.mergeDefault(this.defaultArgs, args)
-    let resultType = request.resultType || this.resultType || ResultTypes.FULL_RESPONSE
+    let transform = request.transform || this.transform || TransformTypes.FULL_RESPONSE
     let err, response
     request.method = method
     request.url = typeof endpoint === "string" ? endpoint : endpoint.toString()
+    request.data = request.data ? Util.trimData(request.data) : null
     this.injectToken(this.token, request)
     this.emiter.emit("request", request);
     [err, response] = await Util.saferize(axios(request))
@@ -167,15 +172,15 @@ class Rest {
     }
     this.emiter.emit("response", response)
     if (["options", "head"].includes(method)) {
-      return resultType === ResultTypes.FULL_RESPONSE ? response : response.headers
+      return transform === TransformTypes.FULL_RESPONSE ? response : response.headers
     }
     this.validateResult(response.data)
-    switch (resultType) {
-      case ResultTypes.CONTENT_ONLY:
+    switch (transform) {
+      case TransformTypes.CONTENT_ONLY:
         return response.data.content
-      case ResultTypes.STATUS_ONLY:
+      case TransformTypes.STATUS_ONLY:
         return response.data.status
-      case ResultTypes.RESPONSE_DATA:
+      case TransformTypes.RESPONSE_DATA:
         return response.data
       default:
         return response

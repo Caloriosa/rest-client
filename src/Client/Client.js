@@ -1,4 +1,4 @@
-const { ResultTypes } = require("../Util/typedefs")
+const { TransformTypes } = require("../Util/typedefs")
 const Rest = require("./Rest")
 const Util = require("../Util/Util")
 const buildRoute = require("../Util/buildRoute")
@@ -52,7 +52,7 @@ class Client {
      * @returns {Promise<AuthInfo>}
      */
   async login (login, password) {
-    const [err, authInfo] = await Util.saferize(this.api.auth.post({login, password}, null, {resultType: ResultTypes.CONTENT_ONLY}))
+    const [err, authInfo] = await Util.saferize(this.api.auth.post({login, password}, null, TransformTypes.CONTENT_ONLY))
     if (err) {
       return Promise.reject(err)
     }
