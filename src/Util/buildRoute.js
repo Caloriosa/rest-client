@@ -36,6 +36,20 @@ function makeRequestFor (rest, method, endpoint) {
 }
 
 /**
+ * @private
+ * @param {String} param
+ */
+function encodeParam (param) {
+  // Encode URI component with whitelisted chars @$:% and encode space as +
+  return encodeURIComponent(param)
+    .replace("%40", "@")
+    .replace("%24", "$")
+    .replace("%3A", ":")
+    .replace("%25", "%")
+    .replace("%20", "+") // Encode space as +
+}
+
+/**
  * @param {Rest} rest
  * @return {Route}
  * @memberof Router
@@ -52,7 +66,7 @@ function buildRoute (rest) {
       return new Proxy(noop, handler)
     },
     apply (target, _, args) {
-      route.push(...args.filter(x => x != null).map(x => encodeURIComponent(x))) // eslint-disable-line eqeqeq
+      route.push(...args.filter(x => x != null).map(x => encodeParam(x))) // eslint-disable-line eqeqeq
       return new Proxy(noop, handler)
     }
   }
