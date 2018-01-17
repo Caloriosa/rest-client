@@ -50,6 +50,7 @@
     "eslint-plugin-promise": "^3.6.0",
     "eslint-plugin-standard": "^3.0.1",
     "jsdoc": "^3.5.5",
+    "nock": "^9.1.6",
     "node-mocks-http": "^1.6.6",
     "parallel-webpack": "^2.2.0",
     "tui-jsdoc-template": "^1.2.2",
@@ -59,7 +60,7 @@
   "ava": {
     "files": [
       "tests/unit/**/*.test.js",
-      "!**/not-this-file.js"
+      "tests/integration/**/*.test.js"
     ],
     "concurrency": 5,
     "failFast": true,
