@@ -1,3 +1,4 @@
+var iter = 0
 /**
  * @class Util
  * @static
@@ -8,41 +9,27 @@ class Util {
   }
 
   /**
-     * Exports only public r/w properties and variables from entity
-     * @param {Object} obj
-     * @returns {Object}
-     */
-  static toRawObject (obj) {
-    const data = {}
+   * Exports only public r/w properties and variables from entity. 
+   * Scalars and arrays converts 1:1. Instances of class converts to native Object, 
+   * loss getters, setters and methods (prepare to serialization)
+   * @param {*} obj
+   * @returns {Object|Array|*}
+   */
+  static trimData (obj) {
+    if (!obj || typeof obj !== "object") {
+      return obj
+    }
+    let data = Array.isArray(obj) ? [] : {}
     Object.keys(obj).forEach(prop => {
       if (prop.startsWith("_") || obj[prop] === undefined) {
         return
       }
-      if (typeof (obj[prop]) === "object" && !Array.isArray(obj)) {
-        data[prop] = Util.toRawObject(obj[prop])
+      if (typeof (obj[prop]) === "object") {
+        data[prop] = Util.trimData(obj[prop])
+      } else {
+        data[prop] = obj[prop]
       }
-      data[prop] = obj[prop]
     })
-    return data
-  }
-
-  /**
-   *
-   * @param {Object} data
-   * @returns {Object}
-   * @private
-   */
-  static trimData (data) {
-    if (Array.isArray(data)) {
-      const cleanArr = []
-      data.forEach(element => {
-        cleanArr.push(Util.trimData(element))
-      })
-      return cleanArr
-    }
-    if (data instanceof Object) {
-      return Util.toRawObject(data)
-    }
     return data
   }
 
