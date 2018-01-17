@@ -8,10 +8,10 @@ class DataResolver {
   }
 
   /**
-     *
-     * @param {UidResolvable} uidResolvable
-     * @static
-     */
+   *
+   * @param {UidResolvable} uidResolvable
+   * @static
+   */
   static resolveUid (uidResolvable) {
     if (typeof uidResolvable === "string") {
       return uidResolvable

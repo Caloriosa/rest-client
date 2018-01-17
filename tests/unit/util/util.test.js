@@ -65,6 +65,48 @@ test("trimData - Deep object", t => {
       public: false
     }
   })
-  t.deepEqual(Util.trimData([1, 2, "Ashley", 3.14, {foo: "bar", _diz: 30}]),
-    [1, 2, "Ashley", 3.14, {foo: "bar"}])
+  t.deepEqual(Util.trimData([1, 2, "Ashley", 3.14, { foo: "bar", _diz: 30 }]),
+    [1, 2, "Ashley", 3.14, { foo: "bar" }])
+})
+
+test("mergeDefault", t => {
+  var defaults = {
+    url: "http://localhost:6060",
+    timeout: 3600,
+    keepAlive: true,
+    proxy: null,
+    auth: {
+      login: "admin",
+      password: "123456",
+      type: "Basic"
+    }
+  }
+  var custom = {
+    url: "https://api.caloriosa.com",
+    proxy: {
+      host: "gw.caloriosa.com",
+      port: 8088,
+      auth: "admin/admin123"
+    },
+    auth: {
+      login: "root",
+      password: "secretpass"
+    }
+  }
+  var expected = {
+    url: "https://api.caloriosa.com",
+    timeout: 3600,
+    keepAlive: true,
+    proxy: {
+      host: "gw.caloriosa.com",
+      port: 8088,
+      auth: "admin/admin123"
+    },
+    auth: {
+      login: "root",
+      password: "secretpass",
+      type: "Basic"
+    }
+  }
+  t.deepEqual(Util.mergeDefault(defaults, custom), expected)
 })

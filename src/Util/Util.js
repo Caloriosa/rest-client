@@ -1,4 +1,3 @@
-var iter = 0
 /**
  * @class Util
  * @static
@@ -9,8 +8,8 @@ class Util {
   }
 
   /**
-   * Exports only public r/w properties and variables from entity. 
-   * Scalars and arrays converts 1:1. Instances of class converts to native Object, 
+   * Exports only public r/w properties and variables from entity.
+   * Scalars and arrays converts 1:1. Instances of class converts to native Object,
    * loss getters, setters and methods (prepare to serialization)
    * @param {*} obj
    * @returns {Object|Array|*}
