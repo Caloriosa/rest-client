@@ -2,16 +2,15 @@ const { TransformTypes } = require("../Util/typedefs")
 const Rest = require("./Rest")
 const Util = require("../Util/Util")
 const buildRoute = require("../Util/buildRoute")
-const RestError = require("./RestError")
 
 /**
  * @class
  */
 class Client {
   /**
-     * @constructor
-     * @param {Client} rest
-     */
+   * @constructor
+   * @param {Client} rest
+   */
   constructor (rest) {
     this._rest = rest
   }
@@ -47,31 +46,25 @@ class Client {
   }
 
   /**
-     *
-     * @param {String} login
-     * @param {String} password
-     * @returns {Promise<AuthInfo>}
-     */
+   *
+   * @param {String} login
+   * @param {String} password
+   * @returns {Promise<AuthInfo>}
+   */
   async login (login, password) {
-    const [err, authInfo] = await Util.saferize(this.api.auth.post({login, password}, null, TransformTypes.CONTENT_ONLY))
-    if (err) {
-      return Promise.reject(err)
-    }
+    const authInfo = await this.api.auth.post({login, password}, null, TransformTypes.CONTENT_ONLY)
     if (!authInfo.token) {
-      throw new RestError("No token aquired in auth response!")
+      throw new Error("No token aquired in auth response!")
     }
     this.token = authInfo.token
     return authInfo
   }
 
   /**
-     * @returns {Promise}
-     */
+   * @returns {Promise}
+   */
   async logout () {
-    const [err] = await Util.saferize(this.api.auth.delete())
-    if (err) {
-      return Promise.reject(err)
-    }
+    await this.api.auth.delete()
     this.token = null
   }
 

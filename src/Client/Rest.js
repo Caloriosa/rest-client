@@ -168,7 +168,7 @@ class Rest {
     this.emiter.emit("request", request);
     [err, response] = await Util.saferize(axios(request))
     if (err) {
-      return this.resolveError(err)
+      throw this.resolveError(err)
     }
     this.emiter.emit("response", response)
     if (["options", "head"].includes(method)) {
@@ -198,7 +198,7 @@ class Rest {
       err = new RestError(`${err.response.status} - ${err.response.statusText}`, err)
     }
     this.emiter.emit("error", err)
-    return Promise.reject(err)
+    return err
   }
 
   validateResult (res) {

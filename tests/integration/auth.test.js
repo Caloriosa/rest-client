@@ -9,6 +9,10 @@ var samples = {
     expireAt: "2017-01-19 08:53:00 UTC",
     identityId: "ertzuio5453224"
   },
+  invalidAuthInfo: {
+    type: "user",
+    identityId: "sdasdasda"
+  },
   loggedUser: {
     _id: "ertzuio5453224",
     login: "elise",
@@ -27,6 +31,22 @@ test.beforeEach("Setup nock", t => {
         message: "OK"
       },
       content: samples.authInfo
+    })
+    .post("/auth", { login: "foobar", password: "barfoo" })
+    .reply(200, {
+      status: {
+        code: "OK",
+        message: "OK"
+      },
+      content: samples.invalidAuthInfo
+    })
+    .post("/auth", { login: "none", password: "123456" })
+    .reply(401, {
+      status: {
+        code: "INVALID_CREDENTIALS",
+        message: "Username or password is not valid!"
+      },
+      content: {}
     })
   nock("http://localhost:6060", {
     reqheaders: {
@@ -87,4 +107,17 @@ test("All together (login + get me + logout)", async t => {
   t.deepEqual(me.content, samples.loggedUser)
   await caloriosa.logout()
   t.is(caloriosa.token, null)
+})
+
+test("Invalid response json (no token aquired)", async t => {
+  var caloriosa = Caloriosa.createApiClient()
+  let err = await t.throws(caloriosa.login("foobar", "barfoo"), Error)
+  t.is(err.message, "No token aquired in auth response!")
+})
+
+test("Authentication failed (credentials)", async t => {
+  var caloriosa = Caloriosa.createApiClient()
+  let error = await t.throws(caloriosa.login("none", "123456"), Caloriosa.CaloriosaApiError)
+  t.is(error.code, Caloriosa.ApiStatuses.INVALID_CREDENTIALS)
+  t.is(error.statusCode, 401)
 })
