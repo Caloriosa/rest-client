@@ -39,4 +39,6 @@ jobs:
       - run: yarn test
       # Build distribution
       - run: yarn build
+      # Report code coverage
+      - run: yarn report-coverage
 
