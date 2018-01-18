@@ -2,6 +2,7 @@ const { TransformTypes } = require("../Util/typedefs")
 const Rest = require("./Rest")
 const Util = require("../Util/Util")
 const buildRoute = require("../Util/buildRoute")
+const RestError = require("./RestError")
 
 /**
  * @class
@@ -55,6 +56,9 @@ class Client {
     const [err, authInfo] = await Util.saferize(this.api.auth.post({login, password}, null, TransformTypes.CONTENT_ONLY))
     if (err) {
       return Promise.reject(err)
+    }
+    if (!authInfo.token) {
+      throw new RestError("No token aquired in auth response!")
     }
     this.token = authInfo.token
     return authInfo
