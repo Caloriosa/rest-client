@@ -52,7 +52,7 @@ class Rest {
       baseURL: this.url,
       headers: {
         "Content-Type": "application/json",
-        "X-Dto-Client": "rest-dto-node",
+        "X-Dto-Client": "caloriosa-rest-client",
         "X-Application": this._options.appSignature || null
       },
       proxy: this._options.proxy || null
