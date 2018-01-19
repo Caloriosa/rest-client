@@ -32,7 +32,7 @@ function makeRequestFor (rest, method, endpoint) {
     args.params = query || null
     args.data = data || null
     args.transform = transform || null
-    return rest.request(method, endpoint, args)
+    return rest.request(method, endpoint, args, transform)
   }
 }
 

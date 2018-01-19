@@ -90,64 +90,6 @@ class Rest {
   }
 
   /**
-   * Handle rest call via method GET
-   * @param {string} path REST path (ex: /auth, /users/32, /devices/6/sensors, ...)
-   * @param {Object} [query] Query parameters (ex: ?count=20&sort=ASC)
-   * @param {Object} [args] HTTP request arguments
-   * @returns {Promise<*>}
-   */
-  get (endpoint, query = null, transform = null, args = {}) {
-    args.params = query
-    args.transform = transform
-    return this.request("get", endpoint, args)
-  }
-
-  /**
-   * Handle rest call via method GET
-   * @param {string} path
-   * @param {string} postData
-   * @param {QueryObject} [query]
-   * @param {Object} [args]
-   * @returns {Promise<*>}
-   */
-  post (endpoint, postData, query = null, transform = null, args = {}) {
-    args.data = postData
-    args.params = query
-    args.transform = transform
-    return this.request("post", endpoint, args)
-  }
-
-  /**
-   * Handle rest call via method GET
-   * @param {string} path
-   * @param {string} postData
-   * @param {QueryObject} [query]
-   * @param {Object} [args]
-   * @returns {Promise<*>}
-   */
-  patch (endpoint, postData, query = null, transform = null, args = {}) {
-    args = Util.mergeDefault(this.defaultArgs, args)
-    args.data = postData
-    args.params = query
-    args.transform = transform
-    return this.request("patch", endpoint, args)
-  }
-
-  /**
-   *
-   * @param {string} path
-   * @param {QueryObject} query
-   * @param {Object} args
-   * @returns {Promise<*>}
-   */
-  delete (endpoint, query = null, transform = null, args = {}) {
-    args = Util.mergeDefault(this.defaultArgs, args)
-    args.parameters = query
-    args.transform = transform
-    return this.request("delete", endpoint, args)
-  }
-
-  /**
    * Handle raw rest request call
    * @param {String} method
    * @param {String} endpoint
@@ -157,10 +99,10 @@ class Rest {
    * @fires Rest#error
    * @return {Promise<*>}
    */
-  async request (method, endpoint, args = {}) {
+  async request (method, endpoint, args = {}, transform = null) {
     let request = Util.mergeDefault(this.defaultArgs, args)
-    let transform = request.transform || this.transform || TransformTypes.FULL_RESPONSE
     let err, response
+    transform = transform || this.transform || TransformTypes.FULL_RESPONSE
     request.method = method
     request.url = typeof endpoint === "string" ? endpoint : endpoint.toString()
     request.data = request.data ? Util.trimData(request.data) : null
