@@ -30,6 +30,7 @@ class Rest {
    */
   constructor (options = {}) {
     /**
+     * @type {ClientOptions}
      * @private
      */
     this._options = Util.mergeDefault(DefaultClientOptions, options)
