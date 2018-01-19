@@ -10,6 +10,7 @@ class DataResolver {
   /**
    *
    * @param {UidResolvable} uidResolvable
+   * @returns {String}
    * @static
    */
   static resolveUid (uidResolvable) {
