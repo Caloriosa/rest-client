@@ -110,3 +110,22 @@ test("mergeDefault", t => {
   }
   t.deepEqual(Util.mergeDefault(defaults, custom), expected)
 })
+
+test("Clone object", t => {
+  var original = {
+    name: "foo",
+    surname: "bar",
+    age: 20
+  }
+  var cloned = Util.cloneObject(original)
+  t.deepEqual(original, cloned)
+  original.name = "baz"
+  t.not(original.name, cloned.name)
+})
+
+test("Can't instantiate Util (static)", t => {
+  var error = t.throws(() => {
+    var util = new Util()
+  }, Error)
+  t.is(error.message, "Can't instantiate static class!")
+})

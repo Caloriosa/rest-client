@@ -4,7 +4,7 @@
  */
 class Util {
   constructor () {
-    throw new Error(`Can't instantiate abstract class ${this.constructor.name}`)
+    throw new Error("Can't instantiate static class!")
   }
 
   /**
