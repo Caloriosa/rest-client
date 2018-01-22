@@ -138,7 +138,7 @@ class Rest {
     if (err.response && err.response.data && err.response.data.status) {
       err = new CaloriosaApiError(err.response.data.status.code, err.response.data.status.message, err)
     } else if (err.response) {
-      err = new RestError(`${err.response.status} - ${err.response.statusText}`, err)
+      err = new RestError(err.response.statusText ? `${err.response.status} - ${err.response.statusText}` : err.message, err)
     }
     this.emiter.emit("error", err)
     return err
