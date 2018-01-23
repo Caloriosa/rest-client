@@ -24,6 +24,16 @@ test("Application signature", t => {
   t.is(rest.appSignature, null)
   rest = new Rest({ appSignature: "blabla" })
   t.is(rest.appSignature, "blabla")
+  rest.defaultArgs.headers = null
+  t.is(rest.appSignature, null)
+  rest.defaultArgs.headers = undefined
+  t.is(rest.appSignature, null)
+})
+
+test("Default args can't be set null or undefined", t => {
+  var rest = new Rest()
+  t.throws(() => { rest.defaultArgs = null }, TypeError)
+  t.throws(() => { rest.defaultArgs = undefined }, TypeError)
 })
 
 test("Response transform (default ClientOptions)", t => {

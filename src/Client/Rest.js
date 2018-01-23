@@ -33,7 +33,7 @@ class Rest {
      * @type {ClientOptions}
      * @private
      */
-    this._options = Util.mergeDefault(DefaultClientOptions, options)
+    this._options = Util.mergeDefault(DefaultClientOptions, options || {})
     /**
      * @type {String}
      */
@@ -49,7 +49,7 @@ class Rest {
     this._token = this._options.token || null
     this._appSignature = this._options.appSignature
     this.emiter = new EventEmmiter()
-    this.defaultArgs = {
+    this._defaultArgs = {
       baseURL: this.url,
       headers: {
         "Content-Type": "application/json",
@@ -66,6 +66,23 @@ class Rest {
    */
   get options () {
     return this._options
+  }
+
+  /**
+   * @type {Object}
+   */
+  get defaultArgs () {
+    return this._defaultArgs || null
+  }
+
+  /**
+   * @type {Object}
+   */
+  set defaultArgs (val) {
+    if (!val) {
+      throw new TypeError("Default arguments for rest http client can't be set null or undefined!")
+    }
+    this._defaultArgs = val
   }
 
   /**
@@ -87,6 +104,9 @@ class Rest {
    * @readonly
    */
   get appSignature () {
+    if (!this.defaultArgs.headers) {
+      return null
+    }
     return this.defaultArgs.headers["X-Application"] || null
   }
 
