@@ -106,6 +106,7 @@ exports.DefaultHttpProxy = {
  * @property {String} [token=null]
  * @property {String} [appSignature=null]
  * @property {ResultType} [resultType=ResultTypes.DATA]
+ * @property {Boolean} [device=false]
  * @property {HttpProxy} [proxy=null]
  */
 exports.DefaultClientOptions = {
@@ -113,6 +114,7 @@ exports.DefaultClientOptions = {
   token: null,
   appSignature: null,
   transform: TransformTypes.RESPONSE_DATA,
+  device: false,
   proxy: null
 }
 
