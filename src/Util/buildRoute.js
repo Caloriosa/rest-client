@@ -9,10 +9,6 @@ const reflectors = [
   Symbol.toPrimitive, Symbol.for("util.inspect.custom"), Symbol("util.inspect.custom")
 ]
 
-if (typeof util !== "undefined") { // eslint-disable-line
-  reflectors.push(util.inspect.custom) // eslint-disable-line no-undef
-}
-
 /**
  * @param {Rest} rest
  * @param {String} method
@@ -45,7 +41,7 @@ function buildRoute (rest) {
   const route = [""]
   const handler = {
     get (target, name) {
-      if (reflectors.includes(name)) return () => route.join("/")
+      if (reflectors.includes(name) || typeof name !== "string") return () => route.join("/")
       if (methods.includes(name)) {
         return makeRequestFor(rest, name, route.join("/"))
       }
