@@ -58,3 +58,15 @@ test("Agent type", t => {
   })
   t.is(rest.defaultArgs.headers["X-Agent-Type"], "device")
 })
+
+test("Set default args", t => {
+  var myDefaults = {
+    url: "https//api.caloriosa.com",
+    headers: {
+      "User-Agent": "CaloriosaClient"
+    }
+  }
+  var rest = new Rest()
+  rest.defaultArgs = myDefaults
+  t.deepEqual(rest.defaultArgs, myDefaults)
+})
