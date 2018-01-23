@@ -63,7 +63,7 @@ test.before("Setup nock", t => {
 })
 
 test("Get users", async t => {
-  var caloriosa = Caloriosa.createApiClient()
+  var caloriosa = new Caloriosa.Client()
   var users = await caloriosa.api.users.get(/* {filter: {login: "ashley", bool: true}} */)
   t.is(users.status.code, "OK")
   t.is(users.status.message, "OK")
@@ -71,7 +71,7 @@ test("Get users", async t => {
 })
 
 test("Get user by login", async t => {
-  var caloriosa = Caloriosa.createApiClient()
+  var caloriosa = new Caloriosa.Client()
   var user = await caloriosa.api.users("@ashley").get()
   t.is(user.status.code, Caloriosa.ApiStatuses.OK)
   t.is(user.status.message, "OK")
@@ -79,7 +79,7 @@ test("Get user by login", async t => {
 })
 
 test("Create user", async t => {
-  var caloriosa = Caloriosa.createApiClient()
+  var caloriosa = new Caloriosa.Client()
   var created = await caloriosa.api.users.post({ login: "elise", password: "pass321abc", name: "Elise Bauman" })
   t.is(created.status.code, Caloriosa.ApiStatuses.CREATED)
   t.is(created.status.message, "Content created")
@@ -87,7 +87,7 @@ test("Create user", async t => {
 })
 
 test("User not found", async t => {
-  var caloriosa = Caloriosa.createApiClient()
+  var caloriosa = new Caloriosa.Client()
   var error = await t.throws(caloriosa.api.users("@natvanlis").get(), Caloriosa.CaloriosaApiError)
   t.is(error.statusCode, 404)
   t.is(error.code, Caloriosa.ApiStatuses.NOT_FOUND)

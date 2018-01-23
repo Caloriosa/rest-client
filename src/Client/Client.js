@@ -11,8 +11,8 @@ class Client {
    * @constructor
    * @param {Client} rest
    */
-  constructor (rest) {
-    this._rest = rest
+  constructor (options = {}, rest = null) {
+    this._rest = rest || new Rest(options)
   }
 
   /**
@@ -70,10 +70,6 @@ class Client {
   async logout () {
     await this.api.auth.delete()
     this.token = null
-  }
-
-  static createApiClient (options) {
-    return new Client(new Rest(options))
   }
 }
 

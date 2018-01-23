@@ -1,25 +1,21 @@
-const { Client, Rest } = require("../../../src/index.js")
+const Caloriosa = require("../../../src/index.js")
 const test = require("ava").test
 
-function createClient (opts = {}) {
-  return new Client(new Rest(opts))
-}
-
 test("isDevice flag", t => {
-  var client = createClient()
+  var client = new Caloriosa.Client()
   t.false(client.isDevice)
-  client = createClient({ device: true })
+  client = new Caloriosa.Client({ device: true })
   t.true(client.isDevice)
 })
 
 test("Token passing by setter", t => {
-  var client = createClient()
+  var client = new Caloriosa.Client()
   t.is(client.token, null)
   client.token = "abcdefgh"
   t.is(client.token, "abcdefgh")
 })
 
 test("Token passing by client options", t => {
-  var client = createClient({ token: "abcdefgh" })
+  var client = new Caloriosa.Client({ token: "abcdefgh" })
   t.is(client.token, "abcdefgh")
 })

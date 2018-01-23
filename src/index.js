@@ -1,10 +1,9 @@
 const Util = require("./Util/Util")
-const Client = require("./Client/Client")
 const typedefs = require("./Util/typedefs")
 
 module.exports = {
   // Main classes
-  Client,
+  Client: require("./Client/Client"),
   Rest: require("./Client/Rest"),
   CaloriosaApiError: require("./Client/CaloriosaApiError"),
   RestError: require("./Client/RestError"),
@@ -21,6 +20,5 @@ module.exports = {
   ApiStatuses: typedefs.ApiStatuses,
   UserRoles: typedefs.UserRoles,
   SensorTypes: typedefs.SensorTypes,
-  IdentityTypes: typedefs.IdentityTypes,
-  createApiClient: Client.createApiClient
+  IdentityTypes: typedefs.IdentityTypes
 }

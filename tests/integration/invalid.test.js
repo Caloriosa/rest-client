@@ -33,25 +33,25 @@ test.beforeEach("Setup nock", t => {
 })
 
 test("Empty result", async t => {
-  var caloriosa = Caloriosa.createApiClient()
+  var caloriosa = new Caloriosa.Client()
   var error = await t.throws(caloriosa.api.empty.get(), ReferenceError)
   t.is(error.message, "No result data given!")
 })
 
 test("No status", async t => {
-  var caloriosa = Caloriosa.createApiClient()
+  var caloriosa = new Caloriosa.Client()
   var error = await t.throws(caloriosa.api.nostatus.get(), ReferenceError)
   t.is(error.message, "No status metadata given from result data!")
 })
 
 test("Undefined content", async t => {
-  var caloriosa = Caloriosa.createApiClient()
+  var caloriosa = new Caloriosa.Client()
   var error = await t.throws(caloriosa.api.nocontent.get(), ReferenceError)
   t.is(error.message, "No content defined in result data!")
 })
 
 test("Server error (CaloriosaApiError)", async t => {
-  var caloriosa = Caloriosa.createApiClient()
+  var caloriosa = new Caloriosa.Client()
   var error = await t.throws(caloriosa.api.error.get(), Caloriosa.CaloriosaApiError)
   t.is(error.code, Caloriosa.ApiStatuses.UNKNOWN)
   t.is(error.statusCode, 500)
@@ -59,7 +59,7 @@ test("Server error (CaloriosaApiError)", async t => {
 })
 
 test("General server error (RestError)", async t => {
-  var caloriosa = Caloriosa.createApiClient()
+  var caloriosa = new Caloriosa.Client()
   var error = await t.throws(caloriosa.api.error.general.get(), Caloriosa.RestError)
   t.is(error.message, "Request failed with status code 500")
 })
