@@ -17,7 +17,7 @@ const reflectors = [
  * @memberof Router
  * @private
  */
-function makeRequestFor (rest, method, endpoint) {
+function createRequester (rest, method, endpoint) {
   return (...params) => {
     let data, query, transform, args
     if (["post", "patch", "put"].includes(method)) {
@@ -43,7 +43,7 @@ function buildRoute (rest) {
     get (target, name) {
       if (reflectors.includes(name) || typeof name !== "string") return () => route.join("/")
       if (methods.includes(name)) {
-        return makeRequestFor(rest, name, route.join("/"))
+        return createRequester(rest, name, route.join("/"))
       }
       route.push(name.toString())
       return new Proxy(noop, handler)
