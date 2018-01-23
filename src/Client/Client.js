@@ -23,6 +23,10 @@ class Client {
     return this._rest
   }
 
+  get isDevice () {
+    return this.rest.isDevice
+  }
+
   /**
    * @type {String}
    */
