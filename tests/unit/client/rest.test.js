@@ -52,11 +52,9 @@ test("Response transform (custom ClientOptions)", t => {
 
 test("Agent type", t => {
   var rest = new Rest()
-  t.is(rest.isDevice, false)
   t.is(rest.defaultArgs.headers["X-Agent-Type"], "user")
   rest = new Rest({
     device: true
   })
-  t.is(rest.isDevice, true)
   t.is(rest.defaultArgs.headers["X-Agent-Type"], "device")
 })

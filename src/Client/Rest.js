@@ -55,7 +55,7 @@ class Rest {
       headers: {
         "Content-Type": "application/json",
         "X-Dto-Client": "caloriosa-rest-client",
-        "X-Agent-Type": this.isDevice ? "device" : "user",
+        "X-Agent-Type": this._options.device ? "device" : "user",
         "X-Application": this._options.appSignature || null
       },
       proxy: this._options.proxy || null
@@ -99,10 +99,6 @@ class Rest {
    */
   set token (val) {
     this._token = val
-  }
-
-  get isDevice () {
-    return this._isDevice
   }
 
   /**

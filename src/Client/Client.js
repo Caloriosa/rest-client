@@ -24,7 +24,7 @@ class Client {
   }
 
   get isDevice () {
-    return this.rest.isDevice
+    return this.rest.options.device
   }
 
   /**
