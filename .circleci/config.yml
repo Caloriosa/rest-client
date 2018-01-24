@@ -49,7 +49,7 @@ jobs:
       - NODE_PATH=.
     steps:
       - checkout
-      run: yarn publish
+      - run: yarn publish
 workflows:
   version: 2
   build_and_test:
