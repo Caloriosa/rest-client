@@ -11,7 +11,7 @@
     "lint:fix": "eslint src/ tests/ --fix",
     "report-coverage": "nyc report --reporter=lcov > coverage.lcov && codecov",
     "generate-docs": "jsdoc -c ./jsdoc.json",
-    "prepublish": "npm run test && npm run build"
+    "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",
