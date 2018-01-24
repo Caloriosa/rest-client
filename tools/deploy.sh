@@ -1,7 +1,10 @@
 #!/bin/bash
 
-VERSION=$(git describe)
+if [ -z ${CIRCLE_TAG} ]; then
+  echo "No release tag specified in CI. Deploy skipped!"
+  exit 0
+fi
 
-echo "Release ${VERSION}"
+echo "Release ${CIRCLE_TAG}"
 
-yarn publish --new-version ${VERSION}
+yarn publish --new-version ${CIRCLE_TAG}
