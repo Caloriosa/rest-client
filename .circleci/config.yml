@@ -44,9 +44,25 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
       - run: yarn test
       - run: yarn report-coverage
+  deploy:
+    docker:
+      - image: circleci/node:8.8
+    working_directory: ~/repo
+    environment:
+      - NODE_PATH=.
+    steps:
+      - checkout
+      - run: yarn install
+      - run: ./tools/deploy.sh
 workflows:
   version: 2
-  build-test:
+  build-test-deploy:
     jobs:
       - build
       - test
+      - deploy:
+        requires:
+          - build
+          - test
+        branches:
+          ignore: \.*\
