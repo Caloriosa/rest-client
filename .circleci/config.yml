@@ -41,4 +41,23 @@ jobs:
       - run: yarn build
       # Report code coverage
       - run: yarn report-coverage
-
+  deploy:
+    docker:
+      - image: circleci/node:8.8
+    working_directory: ~/repo
+    environment:
+      - NODE_PATH=.
+    steps:
+      - checkout
+      run: yarn publish
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
