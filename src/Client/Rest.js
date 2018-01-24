@@ -1,6 +1,7 @@
 const { DefaultClientOptions, TransformTypes } = require("../Util/typedefs")
 const EventEmmiter = require("events")
 const axios = require("axios")
+const qs = require("qs")
 const CaloriosaApiError = require("./CaloriosaApiError")
 const RestError = require("./RestError")
 const Util = require("../Util/Util")
@@ -58,7 +59,10 @@ class Rest {
         "X-Agent-Type": this._options.device ? "device" : "user",
         "X-Application": this._options.appSignature || null
       },
-      proxy: this._options.proxy || null
+      proxy: this._options.proxy || null,
+      paramsSerializer: function (params) {
+        return qs.stringify(params, { encode: false })
+      }
     }
   }
 

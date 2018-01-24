@@ -38,6 +38,19 @@ test.before("Setup nock", t => {
       },
       content: samples.users
     })
+    .get("/users")
+    .query({
+      filter: {
+        login: "ashley"
+      }
+    })
+    .reply(200, {
+      status: {
+        code: "OK",
+        message: "OK"
+      },
+      content: samples.users
+    })
     .get("/users/@ashley")
     .reply(200, {
       status: {
@@ -64,10 +77,16 @@ test.before("Setup nock", t => {
 
 test("Get users", async t => {
   var caloriosa = new Caloriosa.Client()
-  var users = await caloriosa.api.users.get(/* {filter: {login: "ashley", bool: true}} */)
+  var users = await caloriosa.api.users.get()
   t.is(users.status.code, "OK")
   t.is(users.status.message, "OK")
   t.deepEqual(users.content, samples.users)
+})
+
+test("Get users filtered", async t => {
+  var caloriosa = new Caloriosa.Client()
+  var users = await caloriosa.api.users.get({ filter: { login: "ashley" } })
+  t.pass()
 })
 
 test("Get user by login", async t => {
